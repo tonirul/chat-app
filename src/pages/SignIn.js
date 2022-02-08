@@ -8,7 +8,7 @@ function SignIn() {
   const signInWithProvider = async provider => {
 
     const result = await auth.signInWithPopup(provider);
-    console.log('result', result);
+    console.log('result');
   };
 
   const onFacebookSignIn = () => {
