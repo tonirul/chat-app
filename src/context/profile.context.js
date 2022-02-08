@@ -49,7 +49,7 @@ export const ProfileProvider = ({ children }) => {
         userRef.off();
       }
     }
-  }, [])
+  }, []);
 
   return(
       <profileContext.Provider value={{ isLoading, profile }}>
