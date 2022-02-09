@@ -21,7 +21,7 @@ const EditableInput = ({
   const onEditClick = useCallback(() => {
     setIsEditable(p => !p);
     setInput(initialValue);
-
+    
   }, [initialValue]);
 
   const onSaveClick = async () => {
