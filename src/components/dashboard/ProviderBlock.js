@@ -3,8 +3,8 @@ import { Alert, Button, Icon, Tag } from 'rsuite';
 import firebase from 'firebase/app';
 import { auth } from '../../misc/firebase';
 
-const providerBlock = () => {
-  const [isConnected, setIsConnected] = useState({
+const ProviderBlock = () => {
+  const [isConnected, setIsConnected] = useState ({
     'google.com': auth.currentUser.providerData.some(
       data => data.providerId === 'google.com'
     ),
@@ -92,4 +92,4 @@ const providerBlock = () => {
   );
 };
 
-export default providerBlock;
+export default ProviderBlock;
