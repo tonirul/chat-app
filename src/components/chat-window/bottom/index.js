@@ -1,7 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import { Alert, Icon, Input, InputGroup } from 'rsuite';
 import firebase from 'firebase/app';
-import { ref, push, update } from 'firebase/database';
 import { useParams } from 'react-router';
 import { useProfile } from '../../../context/profile.context';
 import { database } from '../../../misc/firebase';
@@ -75,30 +74,29 @@ const Bottom = () => {
       const updates = {};
 
       files.forEach((file) => {
-        const msgData = assembleMessage(profile, window.chatId);
-        msgData.file = file;
+        const msgData = assembleMessage(profile, chatId);
+        msgData.text = file;
 
-        const messageId = push(ref(database, 'messages')).key;
-
+        const messageId = database.ref('message').push().key;
         updates[`/messages/${messageId}`] = msgData;
       });
 
       const lastMsgId = Object.keys(updates).pop();
 
-      updates[`/rooms/${window.chatId}/lastMessage`] = {
+      updates[`/rooms/${chatId}/lastMessage`] = {
         ...updates[lastMsgId],
         msgId: lastMsgId,
       };
 
       try {
-        await update(ref(database), updates);
+        await database.ref().update(updates);
         setIsLoading(false);
       } catch (err) {
         setIsLoading(false);
         Alert.error(err.message);
       }
     },
-    [profile]
+    [chatId, profile]
   );
 
   return (

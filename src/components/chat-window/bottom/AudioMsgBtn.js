@@ -1,11 +1,12 @@
+/* eslint-disable import/no-unresolved */
 import React, { useState, useCallback } from 'react';
 import { InputGroup, Icon, Alert } from 'rsuite';
 import { ReactMic } from 'react-mic';
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { useParams } from 'react-router';
 import { storage } from '../../../misc/firebase';
 
 const AudioMsgBtn = ({ afterUpload }) => {
-  const { chatId } = window;
+  const { chatId } = useParams();
 
   const [isRecording, setIsRecording] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
@@ -18,25 +19,24 @@ const AudioMsgBtn = ({ afterUpload }) => {
     async (data) => {
       setIsUploading(true);
       try {
-        const snap = await uploadBytes(
-          ref(storage, `/chat/${chatId}/audio_${Date.now()}.mp3`),
-          data.blob,
-          {
-            cacheControl: `public, max-age=${3600 * 24 * 3}`,
-          }
-        );
+        const snap = await storage
+          .ref(`/chat/${chatId}`)
+          .child(`audio_${Date.now()}.mp3`)
+          .put(data.blob, {
+            cacheControl: `public, max-age='${3600 * 24 * 3}`,
+          });
 
         const file = {
           contentType: snap.metadata.contentType,
           name: snap.metadata.name,
-          url: await getDownloadURL(snap.ref),
+          url: await snap.ref.getDownloadURL(),
         };
 
         setIsUploading(false);
         afterUpload([file]);
       } catch (error) {
         setIsUploading(false);
-        Alert.error(error.message);
+        Alert.error(error.message, 4000);
       }
     },
     [afterUpload, chatId]
