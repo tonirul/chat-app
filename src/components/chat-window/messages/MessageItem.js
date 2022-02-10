@@ -10,7 +10,7 @@ import ProfileInfoBtnModal from './ProfileInfoBtnModal';
 const MessageItem = ({ message, handleAdmin }) => {
   const { author, createdAt, text } = message;
 
-  const isAdmin = useCurrentRoom((v) => v.admin);
+  const isAdmin = useCurrentRoom((v) => v.isAdmin);
   const admins = useCurrentRoom((v) => v.admins);
 
   const isMsgAuthorAdmin = admins.includes(author.uid);
