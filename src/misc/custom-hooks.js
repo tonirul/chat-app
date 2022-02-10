@@ -32,7 +32,7 @@ export function usePresence(uid) {
   const [presence, setPresence] = useState(null);
 
   useEffect(() => {
-    const userStatusRef = database.ref(`/ststus/${uid}`);
+    const userStatusRef = database.ref(`/status/${uid}`);
 
     userStatusRef.on('value', (snap) => {
       if (snap.exists()) {
