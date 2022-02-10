@@ -1,3 +1,6 @@
+/* eslint-disable no-param-reassign */
+import { ref, get, query, orderByChild, equalTo } from 'firebase/database';
+
 export function getNameInitials(name) {
   const splitName = name.toUpperCase().split(' ');
 
@@ -25,17 +28,18 @@ export async function getUserUpdates(userId, keyToUpdate, value, db) {
 
   updates[`/profiles/${userId}/${keyToUpdate}`] = value;
 
-  const getMsgs = db
-    .ref('/messages')
-    .orderByChild('author/uid')
-    .equalTo(userId)
-    .once('value');
+  const getMsgs = get(
+    query(ref(db, '/messages'), orderByChild('author/uid'), equalTo(userId))
+  );
 
-  const getRooms = db
-    .ref('/rooms')
-    .orderByChild('lastMessage/author/uid')
-    .equalTo(userId)
-    .once('value');
+  const getRooms = get(
+    query(
+      ref(db, '/rooms'),
+      orderByChild('lastMessage/author/uid'),
+      equalTo(userId)
+    )
+  );
+  // Index not defined, add ".indexOn": "author/uid", for path "/messages", to the rules
 
   const [mSnap, rSnap] = await Promise.all([getMsgs, getRooms]);
 
@@ -49,3 +53,27 @@ export async function getUserUpdates(userId, keyToUpdate, value, db) {
 
   return updates;
 }
+
+export function groupBy(array, groupingKeyFn) {
+  return array.reduce((result, item) => {
+    const groupingKey = groupingKeyFn(item);
+
+    if (!result[groupingKey]) {
+      result[groupingKey] = [];
+    }
+
+    result[groupingKey].push(item);
+
+    return result;
+  }, {});
+}
+
+export const isLocalhost = Boolean(
+  window.location.hostname === 'localhost' ||
+    // [::1] is the IPv6 localhost address.
+    window.location.hostname === '[::1]' ||
+    // 127.0.0.0/8 are considered localhost for IPv4.
+    window.location.hostname.match(
+      /^127(?:\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}$/
+    )
+);
