@@ -1,9 +1,12 @@
 import React, { useCallback, useState } from 'react';
 import { Alert, Icon, Input, InputGroup } from 'rsuite';
 import firebase from 'firebase/app';
+import { ref, push, update } from 'firebase/database';
 import { useParams } from 'react-router';
 import { useProfile } from '../../../context/profile.context';
 import { database } from '../../../misc/firebase';
+import AttachmentBtnModal from './AttachmentBtnModal';
+import AudioMsgBtn from './AudioMsgBtn';
 
 function assembleMessage(profile, chatId) {
   return {
@@ -65,9 +68,44 @@ const Bottom = () => {
     }
   };
 
+  const afterUpload = useCallback(
+    async (files) => {
+      setIsLoading(true);
+
+      const updates = {};
+
+      files.forEach((file) => {
+        const msgData = assembleMessage(profile, window.chatId);
+        msgData.file = file;
+
+        const messageId = push(ref(database, 'messages')).key;
+
+        updates[`/messages/${messageId}`] = msgData;
+      });
+
+      const lastMsgId = Object.keys(updates).pop();
+
+      updates[`/rooms/${window.chatId}/lastMessage`] = {
+        ...updates[lastMsgId],
+        msgId: lastMsgId,
+      };
+
+      try {
+        await update(ref(database), updates);
+        setIsLoading(false);
+      } catch (err) {
+        setIsLoading(false);
+        Alert.error(err.message);
+      }
+    },
+    [profile]
+  );
+
   return (
     <div>
       <InputGroup>
+        <AttachmentBtnModal afterUpload={afterUpload} />
+        <AudioMsgBtn afterUpload={afterUpload} />
         <Input
           placeholder="Write a new message here..."
           value={input}
