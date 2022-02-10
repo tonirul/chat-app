@@ -6,7 +6,7 @@ import { useCurrentRoom } from '../../../context/current-rrom.context';
 import { database } from '../../../misc/firebase';
 import EditableInput from '../../EditableInput';
 
-const EditRoomBtnDwarer = () => {
+const EditRoomBtnDrawer = () => {
   const { isOpen, open, close } = useModalState();
 
   const { chatId } = useParams();
@@ -17,7 +17,7 @@ const EditRoomBtnDwarer = () => {
 
   const updateData = (key, value) => {
     database
-      .ref(`room/${chatId}`)
+      .ref(`rooms/${chatId}`)
       .child(key)
       .set(value)
       .then(() => {
@@ -71,4 +71,4 @@ const EditRoomBtnDwarer = () => {
   );
 };
 
-export default memo(EditRoomBtnDwarer);
+export default memo(EditRoomBtnDrawer);
