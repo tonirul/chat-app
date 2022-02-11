@@ -35,7 +35,7 @@ function Signin() {
           <Col xs={24} md={12} mdOffset={6}>
             <Panel>
               <div className="text-center">
-                <h2>Welcome to Chat</h2>
+                <h2>Welcome to Chit-Chat</h2>
                 <p>Progressive Chat Platform for coders</p>
               </div>
               <div className="mt-3">
