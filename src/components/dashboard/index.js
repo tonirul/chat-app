@@ -5,14 +5,14 @@ import { Alert, Button, Divider, Drawer } from 'rsuite';
 import { useProfile } from '../../context/profile.context';
 import { database } from '../../misc/firebase';
 import EditableInput from '../EditableInput';
-import AvatarUploadbtn from './AvatarUploadbtn';
+import AvatarUploadbtn from './AvatarUploadBtn';
 import { getUserUpdates } from '../../misc/helpers';
 
 import ProviderBlock from './ProviderBlock';
 
 function DashBoard({ onSignOut }) {
   const { profile } = useProfile();
-  const onSave = async newData => {
+  const onSave = async (newData) => {
     try {
       const updates = await getUserUpdates(
         profile.uid,

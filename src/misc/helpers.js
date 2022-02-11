@@ -14,7 +14,7 @@ export function transformToArr(snapVal) {
 
 export function transformToArrwithId(snapVal) {
   return snapVal
-    ? Object.keys(snapVal).map(roomId => ({ ...snapVal[roomId], id: roomId }))
+    ? Object.keys(snapVal).map((roomId) => ({ ...snapVal[roomId], id: roomId }))
     : [];
 }
 
@@ -37,10 +37,10 @@ export async function getUserUpdates(userId, keyToUpdate, value, db) {
 
   const [mSnap, rSnap] = await Promise.all([getMessages, getRooms]);
 
-  mSnap.forEach(msgSnap => {
+  mSnap.forEach((msgSnap) => {
     updates[`/messages/${msgSnap.key}/author/${keyToUpdate}`] = value;
   });
-  rSnap.forEach(roomSnap => {
+  rSnap.forEach((roomSnap) => {
     updates[`/rooms/${roomSnap.key}/lastMessage/author/${keyToUpdate}`] = value;
   });
 
@@ -59,3 +59,13 @@ export function groupBy(array, groupingKeyFn) {
     return result;
   }, {});
 }
+
+export const isLocalhost = Boolean(
+  window.location.hostname === 'localhost' ||
+    // [::1] is the IPv6 localhost address.
+    window.location.hostname === '[::1]' ||
+    // 127.0.0.0/8 are considered localhost for IPv4.
+    window.location.hostname.match(
+      /^127(?:\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}$/
+    )
+);

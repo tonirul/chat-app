@@ -5,14 +5,14 @@ import { transformToArrwithId } from '../misc/helpers';
 const RoomsContext = createContext();
 
 export function RoomsProvider({ children }) {
-  const [rooms, setrooms] = useState(null);
+  const [rooms, setRooms] = useState(null);
 
   useEffect(() => {
     const roomListRef = database.ref('rooms');
 
-    roomListRef.on('value', snap => {
+    roomListRef.on('value', (snap) => {
       const data = transformToArrwithId(snap.val());
-      setrooms(data);
+      setRooms(data);
     });
 
     return () => {
