@@ -1,5 +1,4 @@
-import React, { useEffect, useRef } from 'react';
-import { useState, useCallback } from 'react/cjs/react.development';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { useParams } from 'react-router';
 import { Alert, Button } from 'rsuite';
 import { auth, database, storage } from '../../../misc/firebase';
