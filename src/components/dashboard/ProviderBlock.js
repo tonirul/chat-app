@@ -3,8 +3,8 @@ import { Alert, Button, Icon, Tag } from 'rsuite';
 import firebase from 'firebase/app';
 import { auth } from '../../misc/firebase';
 
-const ProviderBlock = () => {
-  const [isConnected, setIsConnected] = useState ({
+function ProviderBlock() {
+  const [isConnected, setIsConnected] = useState({
     'google.com': auth.currentUser.providerData.some(
       data => data.providerId === 'google.com'
     ),
@@ -15,12 +15,10 @@ const ProviderBlock = () => {
   });
 
   const updateIsConnected = (providerId, value) => {
-    setIsConnected(p => {
-      return {
-        ...p,
-        [providerId]: value,
-      };
-    });
+    setIsConnected(p => ({
+      ...p,
+      [providerId]: value,
+    }));
   };
 
   const unlink = async providerId => {
@@ -90,6 +88,6 @@ const ProviderBlock = () => {
       </div>
     </div>
   );
-};
+}
 
 export default ProviderBlock;

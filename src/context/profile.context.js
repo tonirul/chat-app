@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-constructed-context-values */
 import React, {
   createContext,
   useContext,
@@ -20,7 +21,7 @@ const isOnlineForDatabase = {
 
 const profileContext = createContext();
 
-export const ProfileProvider = ({ children }) => {
+export function ProfileProvider({ children }) {
   const [profile, setProfile] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -28,12 +29,12 @@ export const ProfileProvider = ({ children }) => {
     let userRef;
     let userStatusRef;
 
-    const authUnsub = auth.onAuthStateChanged((authObj) => {
+    const authUnsub = auth.onAuthStateChanged(authObj => {
       if (authObj) {
         userStatusRef = database.ref(`/status/${authObj.uid}`);
         userRef = database.ref(`/profiles/${authObj.uid}`);
 
-        userRef.on('value', (snap) => {
+        userRef.on('value', snap => {
           const { name, createdAt, avatar } = snap.val();
 
           const data = {
@@ -47,7 +48,7 @@ export const ProfileProvider = ({ children }) => {
           setIsLoading(false);
         });
 
-        database.ref('.info/connected').on('value', (snapshot) => {
+        database.ref('.info/connected').on('value', snapshot => {
           if (!!snapshot.val() === false) {
             return;
           }
@@ -94,6 +95,6 @@ export const ProfileProvider = ({ children }) => {
       {children}
     </profileContext.Provider>
   );
-};
+}
 
 export const useProfile = () => useContext(profileContext);

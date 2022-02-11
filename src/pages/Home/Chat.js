@@ -9,7 +9,7 @@ import { CurrentRoomProvider } from '../../context/current-rrom.context';
 import { transformToArr } from '../../misc/helpers';
 import { auth } from '../../misc/firebase';
 
-const Chat = () => {
+function Chat() {
   const { chatId } = useParams();
 
   const rooms = useRooms();
@@ -18,7 +18,7 @@ const Chat = () => {
     return <Loader center vertical size="md" content="Loading" speed="slow" />;
   }
 
-  const currentRoom = rooms.find((room) => room.id === chatId);
+  const currentRoom = rooms.find(room => room.id === chatId);
 
   if (!currentRoom) {
     return <h6 className="text-center mt-page">Chat {chatId} not found</h6>;
@@ -49,6 +49,6 @@ const Chat = () => {
       </div>
     </CurrentRoomProvider>
   );
-};
+}
 
 export default Chat;

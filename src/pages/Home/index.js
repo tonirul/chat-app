@@ -6,7 +6,7 @@ import { RoomsProvider } from '../../context/rooms.context';
 import { useMediaQuery } from '../../misc/custom-hooks';
 import Chat from './Chat';
 
-const Home = () => {
+function Home() {
   const isDesktop = useMediaQuery('(min-width: 992px)');
   const { isExact } = useRouteMatch();
 
@@ -40,6 +40,6 @@ const Home = () => {
       </Grid>
     </RoomsProvider>
   );
-};
+}
 
 export default Home;

@@ -1,10 +1,9 @@
 import React from 'react';
 import { Modal } from 'rsuite';
-import { useModalState } from '../../../misc/custom-hooks';
+import { useModalState } from '../../../misc/CustomHooks';
 
-function ImgBtnModal({ src, fileName }) {
+const ImageBtnModal = ({ src, fileName }) => {
   const { isOpen, open, close } = useModalState();
-
   return (
     <>
       <input
@@ -25,12 +24,12 @@ function ImgBtnModal({ src, fileName }) {
         </Modal.Body>
         <Modal.Footer>
           <a href={src} target="_blank" rel="noopener noreferrer">
-            View original
+            View Original
           </a>
         </Modal.Footer>
       </Modal>
     </>
   );
-}
+};
 
-export default ImgBtnModal;
+export default ImageBtnModal;

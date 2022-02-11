@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router';
 import { Alert, Button } from 'rsuite';
 import { auth, database, storage } from '../../../misc/firebase';
-import { groupBy, transformToArrwithId } from '../../../misc/helpers';
+import { groupBy, transformToArrWithId } from '../../../misc/helpers';
 import MessageItem from './MessageItem';
 
 const PAGE_SIZE = 15;
@@ -15,7 +15,7 @@ function shouldScrollToBottom(node, threshold = 30) {
   return percentage > threshold;
 }
 
-const Messages = () => {
+function Messages() {
   const { chatId } = useParams();
   const [messages, setMessages] = useState(null);
   const [limit, setLimit] = useState(PAGE_SIZE);
@@ -25,7 +25,7 @@ const Messages = () => {
   const canShowMessages = messages && messages.length > 0;
 
   const loadMessage = useCallback(
-    (limitToLast) => {
+    limitToLast => {
       const node = selfRef.current;
 
       messagesRef.off();
@@ -34,8 +34,8 @@ const Messages = () => {
         .orderByChild('roomId')
         .equalTo(chatId)
         .limitToLast(limitToLast || PAGE_SIZE)
-        .on('value', (snap) => {
-          const data = transformToArrwithId(snap.val());
+        .on('value', snap => {
+          const data = transformToArrWithId(snap.val());
 
           setMessages(data);
           if (shouldScrollToBottom(node)) {
@@ -43,7 +43,7 @@ const Messages = () => {
           }
         });
 
-      setLimit((p) => p + PAGE_SIZE);
+      setLimit(p => p + PAGE_SIZE);
     },
     [chatId]
   );
@@ -74,10 +74,10 @@ const Messages = () => {
   }, [loadMessage]);
 
   const handleAdmin = useCallback(
-    async (uid) => {
+    async uid => {
       const adminsRef = database.ref(`/rooms/${chatId}/admins`);
       let alertMsg;
-      await adminsRef.transaction((admins) => {
+      await adminsRef.transaction(admins => {
         if (admins) {
           if (admins[uid]) {
             admins[uid] = null;
@@ -94,11 +94,11 @@ const Messages = () => {
     [chatId]
   );
 
-  const handleLike = useCallback(async (msgId) => {
+  const handleLike = useCallback(async msgId => {
     const { uid } = auth.currentUser;
     const messageRef = database.ref(`/messages/${msgId}`);
     let alertMsg;
-    await messageRef.transaction((msg) => {
+    await messageRef.transaction(msg => {
       if (msg) {
         if (msg.likes && msg.likes[uid]) {
           msg.likeCount -= 1;
@@ -163,20 +163,20 @@ const Messages = () => {
   );
 
   const renderMessages = () => {
-    const groups = groupBy(messages, (item) =>
+    const groups = groupBy(messages, item =>
       new Date(item.createdAt).toDateString()
     );
 
     const items = [];
 
-    Object.keys(groups).forEach((date) => {
+    Object.keys(groups).forEach(date => {
       items.push(
         <li key={date} className="text-center mb-1 padded">
           {date}
         </li>
       );
 
-      const msgs = groups[date].map((msg) => (
+      const msgs = groups[date].map(msg => (
         <MessageItem
           key={msg.id}
           message={msg}
@@ -204,6 +204,6 @@ const Messages = () => {
       {canShowMessages && renderMessages()}
     </ul>
   );
-};
+}
 
 export default Messages;

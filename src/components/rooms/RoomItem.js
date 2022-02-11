@@ -2,7 +2,7 @@ import React from 'react';
 import TimeAgo from 'timeago-react';
 import ProfileAvatar from '../ProfileAvatar';
 
-const RoomItem = ({ room }) => {
+function RoomItem({ room }) {
   const { createdAt, name, lastMessage } = room;
   return (
     <div>
@@ -36,6 +36,6 @@ const RoomItem = ({ room }) => {
       </div>
     </div>
   );
-};
+}
 
 export default RoomItem;

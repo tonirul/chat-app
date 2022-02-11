@@ -6,14 +6,14 @@ import { useCurrentRoom } from '../../../context/current-rrom.context';
 import { database } from '../../../misc/firebase';
 import EditableInput from '../../EditableInput';
 
-const EditRoomBtnDrawer = () => {
+function EditRoomBtnDrawer() {
   const { isOpen, open, close } = useModalState();
 
   const { chatId } = useParams();
   const isMobile = useMediaQuery('(max-width: 992px)');
 
-  const name = useCurrentRoom((v) => v.name);
-  const description = useCurrentRoom((v) => v.description);
+  const name = useCurrentRoom(v => v.name);
+  const description = useCurrentRoom(v => v.description);
 
   const updateData = (key, value) => {
     database
@@ -23,16 +23,16 @@ const EditRoomBtnDrawer = () => {
       .then(() => {
         Alert.success('Successfully updated', 4000);
       })
-      .catch((err) => {
+      .catch(err => {
         Alert.error(err.message, 4000);
       });
   };
 
-  const onNameSave = (newName) => {
+  const onNameSave = newName => {
     updateData('name', newName);
   };
 
-  const onDescriptionSave = (newDesc) => {
+  const onDescriptionSave = newDesc => {
     updateData('description', newDesc);
   };
 
@@ -69,6 +69,6 @@ const EditRoomBtnDrawer = () => {
       </Drawer>
     </div>
   );
-};
+}
 
 export default memo(EditRoomBtnDrawer);

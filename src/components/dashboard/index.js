@@ -4,13 +4,13 @@ import { useProfile } from '../../context/profile.context';
 import EditableInput from '../EditableInput';
 import { database } from '../../misc/firebase';
 import ProviderBlock from './ProviderBlock';
-import AvatarUploadBtn from './AvatarUploadBtn';
+import AvatarUploadBtn from './AvatarUploadbtn';
 import { getUserUpdates } from '../../misc/helpers';
 
-const Dashboard = ({ onSignOut }) => {
+function Dashboard({ onSignOut }) {
   const { profile } = useProfile();
 
-  const onSave = async (newData) => {
+  const onSave = async newData => {
     try {
       const updates = await getUserUpdates(
         profile.uid,
@@ -53,6 +53,6 @@ const Dashboard = ({ onSignOut }) => {
       </Drawer.Footer>
     </>
   );
-};
+}
 
 export default Dashboard;

@@ -4,7 +4,7 @@ import { Loader, Nav } from 'rsuite';
 import { useRooms } from '../../context/rooms.context';
 import RoomItem from './RoomItem';
 
-const ChatRoomList = ({ aboveElHeight }) => {
+function ChatRoomList({ aboveElHeight }) {
   const rooms = useRooms();
   const location = useLocation();
   return (
@@ -23,7 +23,7 @@ const ChatRoomList = ({ aboveElHeight }) => {
       )}
       {rooms &&
         rooms.length > 0 &&
-        rooms.map((room) => (
+        rooms.map(room => (
           <Nav.Item
             componentClass={Link}
             to={`/chat/${room.id}`}
@@ -35,6 +35,6 @@ const ChatRoomList = ({ aboveElHeight }) => {
         ))}
     </Nav>
   );
-};
+}
 
 export default ChatRoomList;

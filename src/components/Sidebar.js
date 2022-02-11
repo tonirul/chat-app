@@ -4,7 +4,7 @@ import DashboardToggle from './dashboard/DashboardToggle';
 import CreateRoomBtnModal from './dashboard/CreateRoomBtnModal';
 import ChatRoomList from './rooms/ChatRoomList';
 
-const Sidebar = () => {
+function Sidebar() {
   const topSidebarRef = useRef();
   const [height, setHeight] = useState(0);
 
@@ -26,6 +26,6 @@ const Sidebar = () => {
       <ChatRoomList aboveElHeight={height} />
     </div>
   );
-};
+}
 
 export default Sidebar;

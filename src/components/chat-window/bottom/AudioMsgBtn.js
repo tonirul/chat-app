@@ -5,18 +5,18 @@ import { ReactMic } from 'react-mic';
 import { useParams } from 'react-router';
 import { storage } from '../../../misc/firebase';
 
-const AudioMsgBtn = ({ afterUpload }) => {
+function AudioMsgBtn({ afterUpload }) {
   const { chatId } = useParams();
 
   const [isRecording, setIsRecording] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
 
   const onClick = useCallback(() => {
-    setIsRecording((p) => !p);
+    setIsRecording(p => !p);
   }, []);
 
   const onUpload = useCallback(
-    async (data) => {
+    async data => {
       setIsUploading(true);
       try {
         const snap = await storage
@@ -57,6 +57,6 @@ const AudioMsgBtn = ({ afterUpload }) => {
       />
     </InputGroup.Button>
   );
-};
+}
 
 export default AudioMsgBtn;

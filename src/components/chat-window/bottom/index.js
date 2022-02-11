@@ -20,14 +20,14 @@ function assembleMessage(profile, chatId) {
   };
 }
 
-const Bottom = () => {
+function Bottom() {
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
   const { chatId } = useParams();
   const { profile } = useProfile();
 
-  const onInputChange = useCallback((value) => {
+  const onInputChange = useCallback(value => {
     setInput(value);
   }, []);
 
@@ -60,7 +60,7 @@ const Bottom = () => {
     }
   };
 
-  const onKeyDown = (ev) => {
+  const onKeyDown = ev => {
     if (ev.keyCode === 13) {
       ev.preventDefault();
       OnSendClick();
@@ -68,12 +68,12 @@ const Bottom = () => {
   };
 
   const afterUpload = useCallback(
-    async (files) => {
+    async files => {
       setIsLoading(true);
 
       const updates = {};
 
-      files.forEach((file) => {
+      files.forEach(file => {
         const msgData = assembleMessage(profile, chatId);
         msgData.text = file;
 
@@ -122,6 +122,6 @@ const Bottom = () => {
       </InputGroup>
     </div>
   );
-};
+}
 
 export default Bottom;

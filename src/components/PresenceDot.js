@@ -1,31 +1,32 @@
 import React from 'react';
 import { Badge, Tooltip, Whisper } from 'rsuite';
-import { usePresence } from '../../misc/custom-hooks';
+import { usePresence } from '../misc/CustomHooks';
 
 const getColor = presence => {
   if (!presence) {
-    return 'grey';
+    return 'gray';
   }
   switch (presence.state) {
     case 'online':
       return 'green';
     case 'offline':
       return 'red';
+
     default:
-      return 'grey';
+      return 'gray';
   }
 };
 
 const getText = presence => {
   if (!presence) {
-    return 'Unknown state';
+    return 'Unknown State';
   }
   return presence.state === 'online'
-    ? 'online'
-    : `last online ${new Date(presence.last_changed).toLocaleDateString()}`;
+    ? 'Online'
+    : `Last online ${new Date(presence.last_changed).toLocaleDateString()}`;
 };
 
-function PresenceDot({ uid }) {
+const PresenceDot = ({ uid }) => {
   const presence = usePresence(uid);
 
   return (
@@ -40,6 +41,6 @@ function PresenceDot({ uid }) {
       />
     </Whisper>
   );
-}
+};
 
 export default PresenceDot;

@@ -10,7 +10,7 @@ import ProfileInfoBtnModal from './ProfileInfoBtnModal';
 import IconBtnControl from './IconBtnControl';
 import ImgBtnModal from './ImgBtnModal';
 
-const renderFileMessage = (file) => {
+const renderFileMessage = file => {
   if (file.contentType.includes('image')) {
     return (
       <div className="height-220">
@@ -32,14 +32,14 @@ const renderFileMessage = (file) => {
   return <a href={file.url}>Download {file.name}</a>;
 };
 
-const MessageItem = ({ message, handleAdmin, handleLike, handleDelete }) => {
+function MessageItem({ message, handleAdmin, handleLike, handleDelete }) {
   const { author, createdAt, text, file, likes, likeCount } = message;
 
   const [selfRef, isHovered] = useHover();
   const isMobile = useMediaQuery('(max-width: 992px)');
 
-  const isAdmin = useCurrentRoom((v) => v.isAdmin);
-  const admins = useCurrentRoom((v) => v.admins);
+  const isAdmin = useCurrentRoom(v => v.isAdmin);
+  const admins = useCurrentRoom(v => v.admins);
 
   const isMsgAuthorAdmin = admins.includes(author.uid);
   const isAuthor = auth.currentUser.uid === author.uid;
@@ -105,6 +105,6 @@ const MessageItem = ({ message, handleAdmin, handleLike, handleDelete }) => {
       </div>
     </li>
   );
-};
+}
 
 export default memo(MessageItem);

@@ -3,7 +3,7 @@ import { Redirect, Route } from 'react-router';
 import { Container, Loader } from 'rsuite';
 import { useProfile } from '../context/profile.context';
 
-const PrivateRoute = ({ children, ...routeProps }) => {
+function PrivateRoute({ children, ...routeProps }) {
   const { profile, isLoading } = useProfile();
 
   if (isLoading && !profile) {
@@ -19,6 +19,6 @@ const PrivateRoute = ({ children, ...routeProps }) => {
   }
 
   return <Route {...routeProps}>{children}</Route>;
-};
+}
 
 export default PrivateRoute;

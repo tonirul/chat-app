@@ -3,12 +3,12 @@ import { ButtonToolbar, Icon } from 'rsuite';
 import { Link } from 'react-router-dom';
 import { useCurrentRoom } from '../../../context/current-rrom.context';
 import { useMediaQuery } from '../../../misc/custom-hooks';
-import RoomInfoBtnModal from './RoomInfoBtnModal';
+import RoomInfoBtnModal from './RoominfoBtnModal';
 import EditRoomBtnDrawer from './EditRoomBtnDrawer';
 
-const Top = () => {
-  const name = useCurrentRoom((v) => v.name);
-  const isAdmin = useCurrentRoom((v) => v.isAdmin);
+function Top() {
+  const name = useCurrentRoom(v => v.name);
+  const isAdmin = useCurrentRoom(v => v.isAdmin);
   const isMobile = useMediaQuery(`(max-width: 992px)`);
 
   return (
@@ -40,6 +40,6 @@ const Top = () => {
       </div>
     </div>
   );
-};
+}
 
 export default memo(Top);

@@ -10,11 +10,11 @@ import { getUserUpdates } from '../../misc/helpers';
 const fileInputTypes = '.png, .jpeg, .jpg';
 
 const acceptedFileTypes = ['image/png', 'image/jpeg', 'image/pjpeg'];
-const isValidFile = (file) => acceptedFileTypes.includes(file.type);
+const isValidFile = file => acceptedFileTypes.includes(file.type);
 
-const getBlob = (canvas) => {
-  return new Promise((resolve, reject) => {
-    canvas.toBlob((blob) => {
+const getBlob = canvas =>
+  new Promise((resolve, reject) => {
+    canvas.toBlob(blob => {
       if (blob) {
         resolve(blob);
       } else {
@@ -22,9 +22,8 @@ const getBlob = (canvas) => {
       }
     });
   });
-};
 
-const AvatarUploadBtn = () => {
+function AvatarUploadBtn() {
   const { isOpen, open, close } = useModalState();
 
   const { profile } = useProfile();
@@ -35,7 +34,7 @@ const AvatarUploadBtn = () => {
 
   const avatarEditorRef = useRef();
 
-  const onFileInputChange = (ev) => {
+  const onFileInputChange = ev => {
     const currFiles = ev.target.files;
 
     if (currFiles.length === 1) {
@@ -139,6 +138,6 @@ const AvatarUploadBtn = () => {
       </div>
     </div>
   );
-};
+}
 
 export default AvatarUploadBtn;

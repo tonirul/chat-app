@@ -13,9 +13,9 @@ export function transformToArr(snapVal) {
   return snapVal ? Object.keys(snapVal) : [];
 }
 
-export function transformToArrwithId(snapVal) {
+export function transformToArrWithId(snapVal) {
   return snapVal
-    ? Object.keys(snapVal).map((roomId) => ({ ...snapVal[roomId], id: roomId }))
+    ? Object.keys(snapVal).map(roomId => ({ ...snapVal[roomId], id: roomId }))
     : [];
 }
 
@@ -38,10 +38,10 @@ export async function getUserUpdates(userId, keyToUpdate, value, db) {
 
   const [mSnap, rSnap] = await Promise.all([getMessages, getRooms]);
 
-  mSnap.forEach((msgSnap) => {
+  mSnap.forEach(msgSnap => {
     updates[`/messages/${msgSnap.key}/author/${keyToUpdate}`] = value;
   });
-  rSnap.forEach((roomSnap) => {
+  rSnap.forEach(roomSnap => {
     updates[`/rooms/${roomSnap.key}/lastMessage/author/${keyToUpdate}`] = value;
   });
 
