@@ -4,7 +4,7 @@ import { Alert, Button, Col, Container, Grid, Icon, Panel, Row } from 'rsuite';
 import { auth, database } from '../misc/firebase';
 
 function Signin() {
-  const signInWithProvider = async provider => {
+  const signInWithProvider = async (provider) => {
     try {
       const { additionalUserInfo, user } = await auth.signInWithPopup(provider);
 
@@ -33,10 +33,12 @@ function Signin() {
       <Grid className="mt-page">
         <Row>
           <Col xs={24} md={12} mdOffset={6}>
-            <Panel>
+            <Panel className="test">
               <div className="text-center">
-                <h2>Welcome to Chit-Chat</h2>
-                <p>Progressive Chat Platform for coders</p>
+                <h3>
+                  Welcome to <span className="welcome-txt">Chit-Chat</span>
+                </h3>
+                <p>An app that’s hard to quit</p>
               </div>
               <div className="mt-3">
                 <Button block color="blue" onClick={onFacebookSignin}>

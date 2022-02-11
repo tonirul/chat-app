@@ -12,16 +12,16 @@ function AttachmentBtnModal({ afterUpload }) {
   const [FileList, setFileList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  const onChange = fileArr => {
+  const onChange = (fileArr) => {
     const filtered = fileArr
-      .filter(el => el.blobFile.size <= MAX_FILE_SIZE)
+      .filter((el) => el.blobFile.size <= MAX_FILE_SIZE)
       .slice(0, 5);
     setFileList(filtered);
   };
 
   const onUpload = async () => {
     try {
-      const uploadPromises = FileList.map(f =>
+      const uploadPromises = FileList.map((f) =>
         storage
           .ref(`/chat/${chatId}`)
           .child(Date.now() + f.name)
@@ -30,7 +30,7 @@ function AttachmentBtnModal({ afterUpload }) {
 
       const uploadSnapshots = await Promise.all(uploadPromises);
 
-      const shapePromises = uploadSnapshots.map(async snap => ({
+      const shapePromises = uploadSnapshots.map(async (snap) => ({
         contentType: snap.metadata.contentType,
         name: snap.metadata.name,
         url: await snap.ref.getDownloadURL(),

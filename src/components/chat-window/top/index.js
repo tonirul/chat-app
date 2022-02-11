@@ -1,5 +1,4 @@
 import React, { memo } from 'react';
-
 import { Link } from 'react-router-dom';
 import { ButtonToolbar, Icon } from 'rsuite';
 import { useCurrentRoom } from '../../../context/current-room.context';
@@ -8,8 +7,8 @@ import RoominfoBtnModal from './RoominfoBtnModal';
 import EditRoomBtnDrawer from './EditRoomBtnDrawer';
 
 function Top() {
-  const name = useCurrentRoom(v => v.name);
-  const isAdmin = useCurrentRoom(v => v.isAdmin);
+  const name = useCurrentRoom((v) => v.name);
+  const isAdmin = useCurrentRoom((v) => v.isAdmin);
   const isMobile = useMediaQuery('(max-width:992px)');
   return (
     <div>
