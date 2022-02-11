@@ -1,13 +1,15 @@
 import React from 'react';
-import { Route, Switch, useRouteMatch } from 'react-router';
 import { Col, Grid, Row } from 'rsuite';
+
+import { Route, Switch, useRouteMatch } from 'react-router';
 import Sidebar from '../../components/Sidebar';
 import { RoomsProvider } from '../../context/rooms.context';
-import { useMediaQuery } from '../../misc/custom-hooks';
 import Chat from './Chat';
+import { useMediaQuery } from '../../misc/CustomHooks';
 
-function Home() {
-  const isDesktop = useMediaQuery('(min-width: 992px)');
+function Index() {
+  const isDesktop = useMediaQuery('(min-width:992px)');
+
   const { isExact } = useRouteMatch();
 
   const canRenderSidebar = isDesktop || isExact;
@@ -21,7 +23,6 @@ function Home() {
               <Sidebar />
             </Col>
           )}
-
           <Switch>
             <Route exact path="/chat/:chatId">
               <Col xs={24} md={16} className="h-100">
@@ -30,8 +31,8 @@ function Home() {
             </Route>
             <Route>
               {isDesktop && (
-                <Col xs={24} md={16} className="h-100">
-                  <h6 className="text-center mt-page"> Please select chat</h6>
+                <Col xs={24} md={8} className="h-100">
+                  <h6 className="text-center mt-page">Please Select Chat</h6>
                 </Col>
               )}
             </Route>
@@ -42,4 +43,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default Index;

@@ -26,7 +26,7 @@ const getText = presence => {
     : `Last online ${new Date(presence.last_changed).toLocaleDateString()}`;
 };
 
-const PresenceDot = ({ uid }) => {
+function PresenceDot({ uid }) {
   const presence = usePresence(uid);
 
   return (
@@ -41,6 +41,6 @@ const PresenceDot = ({ uid }) => {
       />
     </Whisper>
   );
-};
+}
 
 export default PresenceDot;

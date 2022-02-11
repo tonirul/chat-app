@@ -1,6 +1,5 @@
-/* eslint-disable import/no-unresolved */
-import React, { useState, useCallback } from 'react';
-import { InputGroup, Icon, Alert } from 'rsuite';
+import React, { useCallback, useState } from 'react';
+import { Alert, Icon, InputGroup } from 'rsuite';
 import { ReactMic } from 'react-mic';
 import { useParams } from 'react-router';
 import { storage } from '../../../misc/firebase';
@@ -9,6 +8,7 @@ function AudioMsgBtn({ afterUpload }) {
   const { chatId } = useParams();
 
   const [isRecording, setIsRecording] = useState(false);
+
   const [isUploading, setIsUploading] = useState(false);
 
   const onClick = useCallback(() => {
@@ -23,7 +23,7 @@ function AudioMsgBtn({ afterUpload }) {
           .ref(`/chat/${chatId}`)
           .child(`audio_${Date.now()}.mp3`)
           .put(data.blob, {
-            cacheControl: `public, max-age='${3600 * 24 * 3}`,
+            cacheControl: `public,max-age=${3600 * 24 * 3}`,
           });
 
         const file = {
@@ -34,9 +34,9 @@ function AudioMsgBtn({ afterUpload }) {
 
         setIsUploading(false);
         afterUpload([file]);
-      } catch (error) {
+      } catch (err) {
         setIsUploading(false);
-        Alert.error(error.message, 4000);
+        Alert.error(err.message, 4000);
       }
     },
     [afterUpload, chatId]

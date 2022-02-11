@@ -1,19 +1,19 @@
 import React, { memo } from 'react';
 import { Alert, Button, Drawer } from 'rsuite';
 import { useParams } from 'react-router';
-import { useMediaQuery, useModalState } from '../../../misc/custom-hooks';
-import { useCurrentRoom } from '../../../context/current-rrom.context';
-import { database } from '../../../misc/firebase';
+import { useMediaQuery, useModalState } from '../../../misc/CustomHooks';
 import EditableInput from '../../EditableInput';
+import { useCurrentRoom } from '../../../context/current-room.context';
+import { database } from '../../../misc/firebase';
 
 function EditRoomBtnDrawer() {
   const { isOpen, open, close } = useModalState();
-
-  const { chatId } = useParams();
-  const isMobile = useMediaQuery('(max-width: 992px)');
+  const isMobile = useMediaQuery('max-width: 992px');
 
   const name = useCurrentRoom(v => v.name);
   const description = useCurrentRoom(v => v.description);
+
+  const { chatId } = useParams();
 
   const updateData = (key, value) => {
     database
@@ -21,7 +21,7 @@ function EditRoomBtnDrawer() {
       .child(key)
       .set(value)
       .then(() => {
-        Alert.success('Successfully updated', 4000);
+        Alert.success('SuccessFully updated', 4000);
       })
       .catch(err => {
         Alert.error(err.message, 4000);
@@ -32,8 +32,8 @@ function EditRoomBtnDrawer() {
     updateData('name', newName);
   };
 
-  const onDescriptionSave = newDesc => {
-    updateData('description', newDesc);
+  const onDescriptionSave = newDescription => {
+    updateData('desciption', newDescription);
   };
 
   return (
@@ -43,21 +43,21 @@ function EditRoomBtnDrawer() {
       </Button>
       <Drawer full={isMobile} show={isOpen} onHide={close} placement="right">
         <Drawer.Header>
-          <Drawer.Title>Edit room</Drawer.Title>
+          <Drawer.Title>Edit Room</Drawer.Title>
         </Drawer.Header>
         <Drawer.Body>
           <EditableInput
             initialValue={name}
             onSave={onNameSave}
             label={<h6 className="mb-2">Name</h6>}
-            emptyMsg="Name can not be empty"
+            emptyMsg="Name cannot be Empty"
           />
           <EditableInput
             componentClass="textarea"
             rows={5}
             initialValue={description}
             onSave={onDescriptionSave}
-            emptyMsg="Description can not be empty"
+            emptyMsg="Description Cannot be Empty"
             wrapperClassName="mt-3"
           />
         </Drawer.Body>

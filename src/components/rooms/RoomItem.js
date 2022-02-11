@@ -1,8 +1,9 @@
+/* eslint-disable */
 import React from 'react';
 import TimeAgo from 'timeago-react';
 import ProfileAvatar from '../ProfileAvatar';
 
-function RoomItem({ room }) {
+const RoomItem = ({ room }) => {
   const { createdAt, name, lastMessage } = room;
   return (
     <div>
@@ -12,10 +13,11 @@ function RoomItem({ room }) {
           datetime={
             lastMessage ? new Date(lastMessage.createdAt) : new Date(createdAt)
           }
-          className="font-normal text-black-45 "
+          className="font-normal text-black-45"
         />
       </div>
-      <div className="d-flex align-items-center text-black-70">
+
+      <div>
         {lastMessage ? (
           <>
             <div className="d-flex align-items-center">
@@ -31,11 +33,13 @@ function RoomItem({ room }) {
             </div>
           </>
         ) : (
-          <span>No messages yet.....</span>
+          <span className="d-flex align-items-center text-black-70">
+            No Messages
+          </span>
         )}
       </div>
     </div>
   );
-}
+};
 
 export default RoomItem;

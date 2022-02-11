@@ -26,7 +26,7 @@ const INITIAL_FORM = {
   description: '',
 };
 
-const CreateRoomBtnModal = () => {
+function CreateRoomBtnModal() {
   const { isOpen, open, close } = useModalState();
 
   const [formValue, setformValue] = useState(INITIAL_FORM);
@@ -111,6 +111,6 @@ const CreateRoomBtnModal = () => {
       </Modal>
     </div>
   );
-};
+}
 
 export default CreateRoomBtnModal;

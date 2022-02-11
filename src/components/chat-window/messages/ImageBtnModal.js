@@ -2,7 +2,7 @@ import React from 'react';
 import { Modal } from 'rsuite';
 import { useModalState } from '../../../misc/CustomHooks';
 
-const ImageBtnModal = ({ src, fileName }) => {
+function ImageBtnModal({ src, fileName }) {
   const { isOpen, open, close } = useModalState();
   return (
     <>
@@ -30,6 +30,6 @@ const ImageBtnModal = ({ src, fileName }) => {
       </Modal>
     </>
   );
-};
+}
 
 export default ImageBtnModal;

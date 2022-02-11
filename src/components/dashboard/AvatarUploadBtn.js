@@ -1,7 +1,8 @@
+/* eslint-disable arrow-body-style */
 import React, { useState, useRef } from 'react';
-import { Alert, Button, Modal } from 'rsuite';
+import { Modal, Button, Alert } from 'rsuite';
 import AvatarEditor from 'react-avatar-editor';
-import { useModalState } from '../../misc/custom-hooks';
+import { useModalState } from '../../misc/CustomHooks';
 import { database, storage } from '../../misc/firebase';
 import { useProfile } from '../../context/profile.context';
 import ProfileAvatar from '../ProfileAvatar';
@@ -11,17 +12,17 @@ const fileInputTypes = '.png, .jpeg, .jpg';
 
 const acceptedFileTypes = ['image/png', 'image/jpeg', 'image/pjpeg'];
 const isValidFile = file => acceptedFileTypes.includes(file.type);
-
-const getBlob = canvas =>
-  new Promise((resolve, reject) => {
+const getBlob = canvas => {
+  return new Promise((resolve, reject) => {
     canvas.toBlob(blob => {
       if (blob) {
         resolve(blob);
       } else {
-        reject(new Error('File process error'));
+        reject(new Error('File Process Error'));
       }
     });
   });
+};
 
 function AvatarUploadBtn() {
   const { isOpen, open, close } = useModalState();
@@ -29,9 +30,7 @@ function AvatarUploadBtn() {
   const { profile } = useProfile();
 
   const [img, setImg] = useState(null);
-
-  const [isLoading, setIsLoading] = useState(false);
-
+  const [isLoading, setisLoading] = useState(false);
   const avatarEditorRef = useRef();
 
   const onFileInputChange = ev => {
@@ -53,16 +52,16 @@ function AvatarUploadBtn() {
   const onUploadClick = async () => {
     const canvas = avatarEditorRef.current.getImageScaledToCanvas();
 
-    setIsLoading(true);
+    setisLoading(true);
     try {
       const blob = await getBlob(canvas);
 
       const avatarFileRef = storage
-        .ref(`/profiles/${profile.uid}`)
+        .ref(`/profile/${profile.uid}`)
         .child('avatar');
 
       const uploadAvatarResult = await avatarFileRef.put(blob, {
-        cacheControl: `public, max-age=${3600 * 24 * 3}`,
+        cacheControl: `public,max-age=${3600 * 24 * 3}`,
       });
 
       const downloadUrl = await uploadAvatarResult.ref.getDownloadURL();
@@ -73,12 +72,13 @@ function AvatarUploadBtn() {
         downloadUrl,
         database
       );
+
       await database.ref().update(updates);
 
-      setIsLoading(false);
+      setisLoading(false);
       Alert.info('Avatar has been uploaded', 4000);
     } catch (err) {
-      setIsLoading(false);
+      setisLoading(false);
       Alert.error(err.message, 4000);
     }
   };
@@ -90,6 +90,7 @@ function AvatarUploadBtn() {
         name={profile.name}
         className="width-200 height-200 img-fullsize font-huge"
       />
+
       <div>
         <label
           htmlFor="avatar-upload"

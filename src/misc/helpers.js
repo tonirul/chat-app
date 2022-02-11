@@ -1,4 +1,3 @@
-/* eslint-disable no-param-reassign */
 export function getNameInitials(name) {
   const splitName = name.toUpperCase().split(' ');
 
@@ -13,7 +12,7 @@ export function transformToArr(snapVal) {
   return snapVal ? Object.keys(snapVal) : [];
 }
 
-export function transformToArrWithId(snapVal) {
+export function transformToArrwithId(snapVal) {
   return snapVal
     ? Object.keys(snapVal).map(roomId => ({ ...snapVal[roomId], id: roomId }))
     : [];

@@ -1,8 +1,9 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
+import { useState, useCallback } from 'react/cjs/react.development';
 import { useParams } from 'react-router';
 import { Alert, Button } from 'rsuite';
 import { auth, database, storage } from '../../../misc/firebase';
-import { groupBy, transformToArrWithId } from '../../../misc/helpers';
+import { groupBy, transformToArrwithId } from '../../../misc/helpers';
 import MessageItem from './MessageItem';
 
 const PAGE_SIZE = 15;
@@ -35,7 +36,7 @@ function Messages() {
         .equalTo(chatId)
         .limitToLast(limitToLast || PAGE_SIZE)
         .on('value', snap => {
-          const data = transformToArrWithId(snap.val());
+          const data = transformToArrwithId(snap.val());
 
           setMessages(data);
           if (shouldScrollToBottom(node)) {

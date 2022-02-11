@@ -1,9 +1,9 @@
 import React, { memo } from 'react';
 import { Button, Modal } from 'rsuite';
-import { useCurrentRoom } from '../../../context/current-rrom.context';
-import { useModalState } from '../../../misc/custom-hooks';
+import { useCurrentRoom } from '../../../context/current-room.context';
+import { useModalState } from '../../../misc/CustomHooks';
 
-function RoomInfoBtnModal() {
+function RoominfoBtnModal() {
   const { isOpen, close, open } = useModalState();
   const description = useCurrentRoom(v => v.description);
   const name = useCurrentRoom(v => v.name);
@@ -11,7 +11,7 @@ function RoomInfoBtnModal() {
   return (
     <>
       <Button appearance="link" className="px-0" onClick={open}>
-        Room information
+        Room Information
       </Button>
       <Modal show={isOpen} onHide={close}>
         <Modal.Header>
@@ -31,4 +31,4 @@ function RoomInfoBtnModal() {
   );
 }
 
-export default memo(RoomInfoBtnModal);
+export default memo(RoominfoBtnModal);

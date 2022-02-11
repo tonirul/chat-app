@@ -1,11 +1,5 @@
 /* eslint-disable react/jsx-no-constructed-context-values */
-import React, {
-  createContext,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 import firebase from 'firebase/app';
 import { auth, database } from '../misc/firebase';
 
@@ -19,7 +13,7 @@ const isOnlineForDatabase = {
   last_changed: firebase.database.ServerValue.TIMESTAMP,
 };
 
-const profileContext = createContext();
+const ProfileContext = createContext();
 
 export function ProfileProvider({ children }) {
   const [profile, setProfile] = useState(null);
@@ -28,15 +22,13 @@ export function ProfileProvider({ children }) {
   useEffect(() => {
     let userRef;
     let userStatusRef;
-
-    const authUnsub = auth.onAuthStateChanged(authObj => {
+    const authUnSub = auth.onAuthStateChanged(authObj => {
       if (authObj) {
         userStatusRef = database.ref(`/status/${authObj.uid}`);
         userRef = database.ref(`/profiles/${authObj.uid}`);
 
         userRef.on('value', snap => {
           const { name, createdAt, avatar } = snap.val();
-
           const data = {
             name,
             createdAt,
@@ -49,9 +41,11 @@ export function ProfileProvider({ children }) {
         });
 
         database.ref('.info/connected').on('value', snapshot => {
+          // If we're not currently connected, don't do anything.
           if (!!snapshot.val() === false) {
             return;
           }
+
           userStatusRef
             .onDisconnect()
             .set(isOfflineForDatabase)
@@ -61,9 +55,8 @@ export function ProfileProvider({ children }) {
         });
       } else {
         if (userRef) {
-          useRef.off();
+          userRef.off();
         }
-
         if (userStatusRef) {
           userStatusRef.off();
         }
@@ -76,8 +69,7 @@ export function ProfileProvider({ children }) {
     });
 
     return () => {
-      authUnsub();
-
+      authUnSub();
       database.ref('.info/connected').off();
 
       if (userRef) {
@@ -91,10 +83,10 @@ export function ProfileProvider({ children }) {
   }, []);
 
   return (
-    <profileContext.Provider value={{ isLoading, profile }}>
+    <ProfileContext.Provider value={{ isLoading, profile }}>
       {children}
-    </profileContext.Provider>
+    </ProfileContext.Provider>
   );
 }
 
-export const useProfile = () => useContext(profileContext);
+export const useProfile = () => useContext(ProfileContext);

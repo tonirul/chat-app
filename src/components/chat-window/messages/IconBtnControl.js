@@ -1,10 +1,9 @@
 import React from 'react';
-import { Badge, Whisper, Tooltip, IconButton, Icon } from 'rsuite';
+import { Badge, Icon, IconButton, Tooltip, Whisper } from 'rsuite';
 
 function ConditionalBadge({ condition, children }) {
   return condition ? <Badge content={condition}>{children}</Badge> : children;
 }
-
 function IconBtnControl({
   isVisible,
   iconName,
@@ -30,7 +29,7 @@ function IconBtnControl({
           <IconButton
             {...props}
             onClick={onClick}
-            circle
+            cirlce
             size="xs"
             icon={<Icon icon={iconName} />}
           />
